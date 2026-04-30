@@ -3,27 +3,28 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+  const HomeScreen({Key? key}) : super(key: key);
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+
+  // Function Sign Out
   Future<void> signOut() async {
     await FirebaseAuth.instance.signOut();
-    if (!mounted) return;
+
     Navigator.pushAndRemoveUntil(
       context,
-      MaterialPageRoute(builder: (context) => SignInScreen()),
+      MaterialPageRoute(builder: (context) => const SignInScreen()),
       (route) => false,
     );
   }
 
-  //Fungsi untuk membuat url foto profile / avatar
-  String generateAvatarUrl(String? fullName) {
-    final formattedName = fullName!.trim().replaceAll(' ', '+');
-    return 'https://ui-avatars.com/api/?name=$formattedName&color=FFFFFF&background=000000';
+  String generateAvatarUrl(String? fulltime) {
+    final formattedName = fulltime!.trim().replaceAll('','+');
+    return 'https://ui-avatars.com/api/?name=$formattedName&colour=FFFFFF&background=000000';
   }
 
   @override
@@ -31,33 +32,21 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Home Screen"),
+        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         actions: [
           IconButton(
+            icon: const Icon(Icons.logout),
             onPressed: () {
               signOut();
             },
-            icon: Icon(Icons.logout),
-            tooltip: "Sign Out",
-          ),
+          )
         ],
       ),
-      body: Column(
-        children: [
-          Image.network(
-            generateAvatarUrl(
-              FirebaseAuth.instance.currentUser?.displayName.toString(),
-            ),
-            width: 100,
-            height: 100,
-          ),
-          SizedBox(height: 8.0),
-          Text(
-            FirebaseAuth.instance.currentUser!.displayName!,
-            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-          ),
-          SizedBox(height: 16.0),
-          const Center(child: Text("You Have Been Signed In!")),
-        ],
+      body: const Center(
+        child: Text(
+          "You Have Been Signed In!",
+          style: TextStyle(fontSize: 18),
+        ),
       ),
     );
   }
