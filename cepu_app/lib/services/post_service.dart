@@ -17,7 +17,7 @@ class PostService {
       'created_at': FieldValue.serverTimestamp(),
       'updated_at': FieldValue.serverTimestamp(),
       'user_id': post.userId,
-      'full_name': post.fullName,
+      'user_full_name': post.userFullName,
     };
     await _postsCollection.add(newPost);
   }
@@ -32,7 +32,7 @@ class PostService {
       'created_at': post.createdAt,
       'updated_at': FieldValue.serverTimestamp(),
       'user_id': post.userId,
-      'full_name': post.fullName,
+      'user_full_name': post.userFullName,
     };
 
     await _postsCollection.doc(post.id).update(updatedPost);
@@ -46,7 +46,7 @@ class PostService {
     return _postsCollection.get();
   }
 
-  static Stream<List<Post>> getNoteList() {
+  static Stream<List<Post>> getPostList() {
     return _postsCollection.snapshots().map((snapshot) {
       return snapshot.docs.map((doc) {
         Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
@@ -64,7 +64,7 @@ class PostService {
           latitude: data['latitude'],
           longitude: data['longitude'],
           userId: data['user_id'],
-          fullName: data['full_name'],
+          userFullName: data['user_full_name'],
         );
       }).toList();
     });

@@ -125,7 +125,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
     }
     //ambil user id dan full name dari firebaseauth
     final userId = FirebaseAuth.instance.currentUser?.uid; 
-    final fullName = FirebaseAuth.instance.currentUser?.displayName; 
+    final userFullName = FirebaseAuth.instance.currentUser?.displayName; 
     try{
       _getLocation();
       PostService.addPost(
@@ -136,7 +136,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
           latitude: _latitude,
           longitude: _longitude,
           userId: userId,
-          fullName: fullName,
+          userFullName: userFullName,
         )
       ).whenComplete((){
         Navigator.of(context).pop();
