@@ -194,3 +194,22 @@ class _AddPostScreenState extends State<AddPostScreen> {
     );
   }
 }
+Future<void> _generatorDescriptionWithAi() async {
+  if (_base64Image == null) return;
+  setState(() => _isGeneratingDescription = true);
+  try {
+    const apiKey = 'AIzaSyDaFE1bfHxIdLQh4Ovn6imBjewSBZzTMAA';
+    const url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:streamGenerateContent?key=$apiKey";
+    final body = jsonEncode({"contents": [
+      "parts": [
+        {
+          "inlineData": {"mineType": "image/jpeg", "data": _base64Image},
+        ),
+        {
+        "text":
+
+        }
+      ]
+    
+  }
+  }
